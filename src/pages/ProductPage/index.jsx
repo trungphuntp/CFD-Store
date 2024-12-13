@@ -13,6 +13,7 @@ import ProductFilter from "./components/ProductFilter";
 import ProductList from "./components/ProductList";
 import ProductToolbox from "./components/ProductToolbox";
 import Breadcrumb from "@/components/Breadcrumb";
+import ScrollTop from "@/utils/ScrollTop";
 
 const LIMIT_PRODUCT = 9;
 
@@ -69,6 +70,7 @@ const ProductPage = () => {
     // ===== PRODUCT ==========
     const products = dataProducts?.products || [];
     const productPagination = dataProducts?.pagination || [];
+
     // product props
     const productListProps = {
         loading: loadingProducts,
@@ -111,6 +113,7 @@ const ProductPage = () => {
     // ===== PAGINATION ==========
     // change pagination
     const onChangePagination = (page) => {
+        ScrollTop();
         updateQuerystring({ ...querryObjectPage, page: page });
     };
     // pagination props
@@ -207,7 +210,7 @@ const ProductPage = () => {
                         <div className="col-lg-9">
                             <ProductToolbox {...toolboxProductsProps} />
                             <ProductList {...productListProps} />
-                            <Pagination {...paginationProps} />
+                            <Pagination {...paginationProps} firstButton lastButton />
                         </div>
                         <ProductFilter {...filterProps} />
                     </div>

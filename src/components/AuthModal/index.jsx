@@ -1,12 +1,10 @@
 import { TYPE_MODAL } from "@/constants/General";
-import { useMainContext } from "@/contexts/MainContext";
+import { handleCloseModal, handleShowModal } from "@/store/reducers/authReducer";
 import classNames from "classnames";
-import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import AuthLogin from "./components/AuthLogin";
 import AuthRegister from "./components/AuthRegister";
-import { useDispatch, useSelector } from "react-redux";
-import { handleCloseModal, handleShowModal } from "@/store/reducers/authReducer";
 
 const StyledModal = styled.div`
     transition: opacity 0.3s, visibility 0.3s;

@@ -1,24 +1,23 @@
 import Breadcrumb from "@/components/Breadcrumb";
+import ComponentLoading from "@/components/ComponentLoading";
 import { PATH } from "@/constants/Pathjs";
 import useDebounce from "@/hooks/useDebounce";
+import useMutation from "@/hooks/useMutation";
 import useQuery from "@/hooks/useQuery";
 import ProductServices from "@/services/ProductServices";
-import { formatCurrency } from "@/utils/format";
+import { useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import ProductDetailBottom from "./components/ProductDetailBottom";
 import ProductDetailTop from "./components/ProductDetailTop";
-import useMutation from "@/hooks/useMutation";
-import { useEffect } from "react";
 
 const ProductDetailPage = () => {
     const { productSlug } = useParams();
 
     // product Detail API
-    const {
-        data: dataProductDetail,
-        error: errorProductDetail,
-        loading: loadingProductDetail,
-    } = useQuery(() => ProductServices.getProductsBySlug(productSlug), [productSlug]);
+    const { data: dataProductDetail, loading: loadingProductDetail } = useQuery(
+        () => ProductServices.getProductsBySlug(productSlug),
+        [productSlug]
+    );
 
     const {
         color,
@@ -31,25 +30,23 @@ const ProductDetailPage = () => {
         stock,
         description,
         shippingReturn,
+        discount,
     } = dataProductDetail || [];
 
+    // product review API
     const {
         data: dataReview,
-        error: errorReview,
         loading: loadingReview,
         execute: fetchReview,
     } = useMutation((query) => ProductServices.getProductReview(query));
 
     useEffect(() => {
-        fetchReview(id);
-    }, [id]);
+        if (!!dataProductDetail) {
+            fetchReview(id);
+        }
+    }, [dataProductDetail]);
 
-    // console.log(dataProductDetail);
-    // console.log(dataReview);
-
-    const handleAddCart = () => {};
-    const handleWishlish = () => {};
-
+    // product top props
     const productTopProps = {
         id,
         color,
@@ -57,15 +54,15 @@ const ProductDetailPage = () => {
         rating,
         reviews: dataReview?.length || 0,
         widthStar: ((rating || 0) / 5) * 100 || 0,
-        price: formatCurrency(price),
+        discount,
+        price,
         category,
         images,
-        handleAddCart,
-        handleWishlish,
         stock,
         description,
     };
 
+    // product bottom props
     const productBottomProps = {
         reviews: dataReview,
         countReviews: dataReview?.length || 0,
@@ -73,10 +70,12 @@ const ProductDetailPage = () => {
         shippingReturn,
     };
 
-    const loadingPage = useDebounce();
+    const loadingAPI = loadingProductDetail || loadingReview;
+    const loadingPage = useDebounce(loadingAPI, 300);
 
     return (
         <main className="main">
+            {loadingPage && <ComponentLoading />}
             <nav aria-label="breadcrumb" className="breadcrumb-nav border-0 mb-0">
                 <div className="container d-flex align-items-center">
                     <Breadcrumb>

@@ -45,6 +45,7 @@ const ProductGallery = ({ images }) => {
                 }
             });
         }
+
         return () => {
             $(".zoomContainer").remove();
         };

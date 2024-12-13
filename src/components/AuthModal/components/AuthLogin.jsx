@@ -23,7 +23,6 @@ const AuthLogin = () => {
         if (data) {
             dispatch(handleLogin(data));
         }
-        z;
     };
     const loadingPage = useDebounce(loading.login, 300);
 

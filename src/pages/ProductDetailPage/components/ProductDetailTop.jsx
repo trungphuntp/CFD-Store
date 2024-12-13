@@ -1,31 +1,32 @@
+import ProductGallery from "@/components/ProductGallery";
+import ShareLink from "@/components/ShareLink";
 import { PATH } from "@/constants/Pathjs";
-import React, { useRef } from "react";
+import { message } from "antd";
+import { useRef } from "react";
 import { Link } from "react-router-dom";
 import ColorProduct from "./ColorProduct";
 import QuanlityProduct from "./QuanlityProduct";
-import { message } from "antd";
-import ShareLink from "@/components/ShareLink";
-import ProductGallery from "@/components/ProductGallery";
+import { useDispatch } from "react-redux";
+import { formatCurrency } from "@/utils/format";
+import { handleUpdateCart } from "@/store/reducers/cartReducer";
 
 const ProductDetailTop = ({
     id,
     color,
     title,
-    rating,
     price,
+    discount,
     category,
     images,
-    handleAddCart,
-    handleWishlish,
     stock,
     widthStar,
     description,
     reviews,
 }) => {
     const categoryPath = PATH.PRODUCTS.INDEX + `?category=${category?.id}`;
-
     const refColor = useRef();
     const refQuanlity = useRef();
+    const dispatch = useDispatch();
 
     const handleAddToCart = (e) => {
         e?.preventDefault();
@@ -37,9 +38,18 @@ const ProductDetailTop = ({
         } else if (isNaN(quantity) || quantity < 1) {
             message.error("Quantity must be greater than 1");
         } else {
-            resetColor();
-            resetQuantity();
-            handleAddCart?.();
+            const payload = {
+                addedID: id,
+                addedColor: color,
+                addedQuantity: quantity,
+                addedPrice: price - discount,
+            };
+            const res = dispatch(handleUpdateCart(payload)).unwrap();
+            if (res) {
+                // console.log(res);
+                // resetColor();
+                // resetQuantity();
+            }
         }
     };
 
@@ -68,7 +78,18 @@ const ProductDetailTop = ({
                                 ( {reviews || 0} Reviews )
                             </a>
                         </div>
-                        <div className="product-price"> ${price || 0} </div>
+                        <div className="product-price" style={{ display: "flex", gap: 20 }}>
+                            <span> ${formatCurrency(price - discount || 0)} </span>
+                            <span
+                                style={{
+                                    color: "#ccc",
+                                    textDecoration: "line-through",
+                                    fontSize: 20,
+                                }}
+                            >
+                                ${formatCurrency(price || 0)}
+                            </span>
+                        </div>
                         <div className="product-content">
                             <p dangerouslySetInnerHTML={{ __html: description || "" }}></p>
                         </div>

@@ -3,7 +3,14 @@ import PaginationItem from "./components/PaginationItem";
 
 const PAGE_STEP = 1;
 
-const Pagination = ({ page, limit = 0, total = 0, onChangePagination }) => {
+const Pagination = ({
+    page,
+    limit = 0,
+    total = 0,
+    onChangePagination,
+    firstButton,
+    lastButton,
+}) => {
     const totalPage = useMemo(() => {
         if (!limit || !total) {
             return 1;
@@ -75,9 +82,11 @@ const Pagination = ({ page, limit = 0, total = 0, onChangePagination }) => {
                     </span>{" "}
                     Prev{" "}
                 </PaginationItem>
-                <PaginationItem isDisable={pageList[0] === page} onClick={onFirst}>
-                    First
-                </PaginationItem>
+                {!!firstButton && (
+                    <PaginationItem isDisable={pageList[0] === page} onClick={onFirst}>
+                        First
+                    </PaginationItem>
+                )}
                 {pageList?.length > 0 &&
                     pageList?.map((item, index) => {
                         return (
@@ -97,10 +106,15 @@ const Pagination = ({ page, limit = 0, total = 0, onChangePagination }) => {
                     className="page-item-total"
                     style={{ paddingRight: 5 }}
                 >{`of ${totalPage} `}</li>
-                <PaginationItem isDisable={pageList[pageList.length - 1] === page} onClick={onLast}>
-                    {" "}
-                    Last
-                </PaginationItem>
+                {!!lastButton && (
+                    <PaginationItem
+                        isDisable={pageList[pageList.length - 1] === page}
+                        onClick={onLast}
+                    >
+                        {" "}
+                        Last
+                    </PaginationItem>
+                )}
                 <PaginationItem
                     typeButton="next"
                     isDisable={pageList[pageList.length - 1] === page}

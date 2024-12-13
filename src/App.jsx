@@ -1,5 +1,4 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import "./App.css";
 import { PATH } from "./constants/Pathjs";
 import MainLayout from "./layout/MainLayout";
 import AboutPage from "./pages/AboutPage";
@@ -25,8 +24,10 @@ import PageNotFound from "./pages/PageNotFound";
 import PrivateRoute from "./components/PrivateRoute";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { handleGetProfile } from "./store/reducers/authReducer";
 import { message } from "antd";
+import { handleGetProfile } from "./store/reducers/authReducer";
+import { handleGetCart } from "./store/reducers/cartReducer";
+import { methodToken } from "./utils/Token";
 
 function App() {
     const dispatch = useDispatch();
@@ -36,13 +37,16 @@ function App() {
             duration: 3,
             maxCount: 3,
         });
-        dispatch(handleGetProfile());
+        if (methodToken.get()) {
+            dispatch(handleGetProfile());
+            dispatch(handleGetCart());
+        }
     }, []);
 
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/" element={<MainLayout />}>
+                <Route path={PATH.INDEX} element={<MainLayout />}>
                     {/* Home page */}
                     <Route index element={<HomePage />} />
 

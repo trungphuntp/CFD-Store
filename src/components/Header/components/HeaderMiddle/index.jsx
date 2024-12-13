@@ -90,7 +90,7 @@ const HeaderMiddle = () => {
                 </nav>
                 <div className="header-right">
                     <div className="header-search">
-                        <a href="#" className="search-toggle" role="button" title="Search">
+                        <a href="#" className="search-toggle" title="Search">
                             <i className="icon-search" />
                         </a>
                         <form action="#" method="get">

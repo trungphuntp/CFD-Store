@@ -2,6 +2,7 @@ import AuthServices from "@/services/AuthServices";
 import { methodToken } from "@/utils/Token";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { message } from "antd";
+import { handleGetCart } from "./cartReducer";
 
 const initialState = {
     showModal: "",
@@ -12,7 +13,8 @@ const initialState = {
         getProfile: false,
     },
 };
-export const authSlice = createSlice({
+
+const authSlice = createSlice({
     initialState,
     name: "auth",
     // reducer trùng với action
@@ -71,16 +73,15 @@ export const authSlice = createSlice({
 // authSlice trả về obj có actions và reducer
 const { actions, reducer: authReducer } = authSlice;
 
-// action KHÔNG BẤT ĐỒNG BỘ
+// action  ĐỒNG BỘ
 export const { handleShowModal, handleCloseModal, handleLogout } = actions;
 export default authReducer;
 
 // action  BẤT ĐỒNG BỘ => sử dụng  Async Thunk
-
 // createAsyncThunk tự tạo ra 3 function tự động gọi {pending, fulfilled, and rejected } => extra function
 // Tượng chưng 3 trạng thái:
-// - pending: ngay khi async function được gọi
-// - fulfilled: khi được return
+// - pending: ngay khi async function vừa được gọi
+// - fulfilled: khi được return thành công
 // - rejected: khi catch error trong trycatch
 
 export const handleLogin = createAsyncThunk("auth/handleLogin", async (dataLogin, thunkAPI) => {
@@ -98,6 +99,7 @@ export const handleLogin = createAsyncThunk("auth/handleLogin", async (dataLogin
             const { token: accessToken, refreshToken } = res.data.data;
             methodToken.set({ token: accessToken, refreshToken });
             thunkAPI.dispatch(handleGetProfile());
+            thunkAPI.dispatch(handleGetCart());
 
             return res.data.data;
         }

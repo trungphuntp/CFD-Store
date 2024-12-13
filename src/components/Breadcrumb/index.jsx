@@ -2,7 +2,7 @@ import React from "react";
 
 const Breadcrumb = ({ children }) => {
     return (
-        <nav aria-label="breadcrumb" className="breadcrumb-nav mb-2">
+        <nav aria-label="breadcrumb" className="breadcrumb-nav mb-2" style={{ maxWidth: "100%" }}>
             <div className="container">
                 <ol className="breadcrumb">{children}</ol>
             </div>

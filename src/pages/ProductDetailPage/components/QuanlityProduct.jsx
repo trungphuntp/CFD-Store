@@ -10,8 +10,6 @@ const StyledButton = styled.div`
 const QuanlityProduct = ({ max, defaultValue = 0 }, ref) => {
     const maxNumber = Number(max) || 0;
 
-    console.log(maxNumber);
-
     const [quantity, setQuantity] = useState(defaultValue);
     useImperativeHandle(ref, () => {
         return {

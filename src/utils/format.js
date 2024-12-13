@@ -16,3 +16,7 @@ export const formatCurrency = (data, type = "en-US") => {
         maximumFractionDigits: 2,
     });
 };
+
+export const compareDate = (date, dateDefault = "2024-2-1") => {
+    return moment(date).isAfter(moment(dateDefault));
+};

@@ -1,42 +1,88 @@
 import {
     FacebookShareButton,
     InstapaperShareButton,
+    LinkedinShareButton,
     PinterestShareButton,
     TwitterShareButton,
 } from "react-share";
+import styled from "styled-components";
 
-const ShareLink = ({ path = window.location.href, label, type, media, children }) => {
+const StyledLink = styled.a`
+    padding: 0 10px;
+`;
+
+const ShareLink = ({
+    path = window.location.href,
+    label,
+    type,
+    media,
+    children,
+    className = "",
+}) => {
     switch (type) {
         case "Twitter":
             return (
                 <TwitterShareButton url={path}>
-                    <a href="#" className="social-icon" title={label} target="_blank">
+                    <StyledLink
+                        href="#"
+                        className={`social-icon ${className}`}
+                        title={label}
+                        target="_blank"
+                    >
                         {children}
-                    </a>
+                    </StyledLink>
                 </TwitterShareButton>
             );
         case "Instagram":
             return (
                 <InstapaperShareButton url={path}>
-                    <a href="#" className="social-icon" title={label} target="_blank">
+                    <StyledLink
+                        href="#"
+                        className={`social-icon ${className}`}
+                        title={label}
+                        target="_blank"
+                    >
                         {children}
-                    </a>
+                    </StyledLink>
                 </InstapaperShareButton>
             );
         case "Printerest":
             return (
                 <PinterestShareButton url={path} description="" media={media}>
-                    <a href="#" className="social-icon" title={label} target="_blank">
+                    <StyledLink
+                        href="#"
+                        className={`social-icon ${className}`}
+                        title={label}
+                        target="_blank"
+                    >
                         {children}
-                    </a>
+                    </StyledLink>
                 </PinterestShareButton>
+            );
+        case "Linkedin":
+            return (
+                <LinkedinShareButton url={path}>
+                    <StyledLink
+                        href="#"
+                        className={`social-icon ${className}`}
+                        title={label}
+                        target="_blank"
+                    >
+                        {children}
+                    </StyledLink>
+                </LinkedinShareButton>
             );
         default:
             return (
                 <FacebookShareButton url={path}>
-                    <a href="#" className="social-icon" title={label} target="_blank">
+                    <StyledLink
+                        href="#"
+                        className={`social-icon ${className}`}
+                        title={label}
+                        target="_blank"
+                    >
                         {children}
-                    </a>
+                    </StyledLink>
                 </FacebookShareButton>
             );
     }

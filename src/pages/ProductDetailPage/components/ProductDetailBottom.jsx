@@ -14,7 +14,6 @@ const ProductDetailBottom = ({ shippingReturn, description, countReviews, review
         e?.stopPropagation();
         setActiveTab(type);
     };
-    console.log(reviews);
 
     return (
         <div className="product-details-tab">
