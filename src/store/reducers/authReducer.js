@@ -126,8 +126,8 @@ export const handleRegister = createAsyncThunk(
 
             const res = await AuthServices.register(payload);
 
-            if (res?.data?.data?.id) {
-                messageApi.success("Register success!");
+            if (!!res?.data?.data?.id) {
+                message.success("Register success!");
                 thunkAPI.dispatch(
                     handleLogin({ email: payload.email, password: payload.password })
                 );

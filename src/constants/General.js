@@ -30,3 +30,20 @@ export const SORT_TYPE = {
         queryStringType: { orderBy: "rating", order: "-1" },
     },
 };
+export const SHOPPING_TYPE = [
+    {
+        value: "free",
+        label: "Free Shipping",
+        price: 0,
+    },
+    {
+        value: "standart",
+        label: "Standart ",
+        price: 10,
+    },
+    {
+        value: "express",
+        label: "Express ",
+        price: 20,
+    },
+];

@@ -8,7 +8,7 @@ import ColorProduct from "./ColorProduct";
 import QuanlityProduct from "./QuanlityProduct";
 import { useDispatch } from "react-redux";
 import { formatCurrency } from "@/utils/format";
-import { handleUpdateCart } from "@/store/reducers/cartReducer";
+import { handleAddCart } from "@/store/reducers/cartReducer";
 
 const ProductDetailTop = ({
     id,
@@ -28,7 +28,7 @@ const ProductDetailTop = ({
     const refQuanlity = useRef();
     const dispatch = useDispatch();
 
-    const handleAddToCart = (e) => {
+    const handleAddToCart = async (e) => {
         e?.preventDefault();
         const { value: color, reset: resetColor } = refColor?.current || {};
         const { value: quantity, reset: resetQuantity } = refQuanlity?.current || {};
@@ -38,17 +38,20 @@ const ProductDetailTop = ({
         } else if (isNaN(quantity) || quantity < 1) {
             message.error("Quantity must be greater than 1");
         } else {
-            const payload = {
+            const addPayload = {
                 addedID: id,
                 addedColor: color,
                 addedQuantity: quantity,
                 addedPrice: price - discount,
             };
-            const res = dispatch(handleUpdateCart(payload)).unwrap();
-            if (res) {
-                // console.log(res);
-                // resetColor();
-                // resetQuantity();
+            try {
+                const res = await dispatch(handleAddCart(addPayload)).unwrap();
+                if (res?.id) {
+                    resetColor();
+                    resetQuantity();
+                }
+            } catch (error) {
+                console.log(error);
             }
         }
     };
@@ -93,9 +96,14 @@ const ProductDetailTop = ({
                         <div className="product-content">
                             <p dangerouslySetInnerHTML={{ __html: description || "" }}></p>
                         </div>
-                        <ColorProduct colors={color} ref={refColor} />
-                        <QuanlityProduct ref={refQuanlity} max={stock || 0} />
-
+                        <div className="details-filter-row details-row-size">
+                            <label>Color:</label>
+                            <ColorProduct colors={color} ref={refColor} isClick={true} />
+                        </div>
+                        <div className="details-filter-row details-row-size">
+                            <label htmlFor="qty">Qty:</label>
+                            <QuanlityProduct ref={refQuanlity} max={stock || 100} />
+                        </div>
                         <div className="product-details-action">
                             <a href="#" className="btn-product btn-cart" onClick={handleAddToCart}>
                                 <span>add to cart</span>

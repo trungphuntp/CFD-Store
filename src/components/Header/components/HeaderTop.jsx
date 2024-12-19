@@ -21,6 +21,7 @@ const HeaderTop = () => {
         dispatch(handleLogout());
         navigate("/");
     };
+    const { firstName } = profile || [];
 
     return (
         <div className="header-top">
@@ -57,7 +58,7 @@ const HeaderTop = () => {
                                     }}
                                 >
                                     <i className="icon-user" />
-                                    Tran Nghia
+                                    {firstName || "Guest"}
                                 </a>
                                 <ul>
                                     <li>

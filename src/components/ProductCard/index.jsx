@@ -1,11 +1,41 @@
 import { PATH } from "@/constants/Pathjs";
+import { handleAddCart } from "@/store/reducers/cartReducer";
 import { compareDate, formatCurrency } from "@/utils/format";
+import { message } from "antd";
 import React from "react";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 
-const ProductCard = ({ images, title, price, rating, onSale, slug, updatedAt, discount }) => {
+const ProductCard = ({
+    images,
+    title,
+    price,
+    rating,
+    onSale,
+    slug,
+    updatedAt,
+    discount,
+    id,
+    color,
+}) => {
     const linkDetail = PATH.PRODUCTS.INDEX + `/${slug}`;
     const isNewProduct = compareDate(updatedAt);
+    const dispatch = useDispatch();
+
+    const handleAddToCard = async (e) => {
+        e?.preventDefault();
+        e?.stopPropagation();
+        const addPayload = {
+            addedID: id,
+            addedColor: color[0],
+            addedQuantity: 1,
+            addedPrice: price - discount,
+        };
+        const res = await dispatch(handleAddCart(addPayload)).unwrap();
+        if (res?.id) {
+            // console.log(res);
+        }
+    };
 
     return (
         <div className="product product-2">
@@ -31,7 +61,12 @@ const ProductCard = ({ images, title, price, rating, onSale, slug, updatedAt, di
                     </a>
                 </div>
                 <div className="product-action product-action-dark">
-                    <a href="#" className="btn-product btn-cart" title="Add to cart">
+                    <a
+                        href="#"
+                        className="btn-product btn-cart"
+                        title="Add to cart"
+                        onClick={handleAddToCard}
+                    >
                         <span>add to cart</span>
                     </a>
                 </div>

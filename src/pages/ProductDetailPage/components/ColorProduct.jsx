@@ -1,6 +1,6 @@
 import React, { forwardRef, useImperativeHandle, useState } from "react";
 
-const ColorProduct = ({ colors, defaultValue = "" }, ref) => {
+const ColorProduct = ({ colors, defaultValue = "", isClick = false }, ref) => {
     const [selectedColor, setSelectedColor] = useState(defaultValue);
 
     useImperativeHandle(ref, () => {
@@ -10,31 +10,36 @@ const ColorProduct = ({ colors, defaultValue = "" }, ref) => {
         };
     });
 
+    const onClickColor = (e, color) => {
+        e?.preventDefault();
+        e?.stopPropagation();
+        console.log(isClick);
+        if (isClick) {
+            if (selectedColor === color) {
+                setSelectedColor("");
+            } else {
+                setSelectedColor(color);
+            }
+        }
+    };
+
     return (
-        <div className="details-filter-row details-row-size">
-            <label>Color:</label>
-            <div className="product-nav product-nav-dots" ref={ref}>
-                {colors?.map((color, index) => {
-                    return (
-                        <div
-                            key={new Date().getTime() + index}
-                            className={`product-nav-item ${
-                                selectedColor === color ? "active" : ""
-                            } `}
-                            style={{ background: color || "" }}
-                            onClick={(e) => {
-                                if (selectedColor === color) {
-                                    setSelectedColor("");
-                                } else {
-                                    setSelectedColor(color);
-                                }
-                            }}
-                        >
-                            <span className="sr-only">Color name</span>
-                        </div>
-                    );
-                })}
-                {/* <div
+        <div className="product-nav product-nav-dots" ref={ref}>
+            {colors?.map((color, index) => {
+                return (
+                    <div
+                        key={new Date().getTime() + index}
+                        className={`product-nav-item ${selectedColor === color ? "active" : ""} `}
+                        style={{ background: color || "" }}
+                        onClick={(e) => {
+                            onClickColor(e, color);
+                        }}
+                    >
+                        <span className="sr-only">Color name</span>
+                    </div>
+                );
+            })}
+            {/* <div
                                     className="product-nav-item active"
                                     style={{ background: "#e2e2e2" }}
                                 >
@@ -46,7 +51,6 @@ const ColorProduct = ({ colors, defaultValue = "" }, ref) => {
                                 <div className="product-nav-item" style={{ background: "#f2bc9e" }}>
                                     <span className="sr-only">Color name</span>
                                 </div> */}
-            </div>
         </div>
     );
 };

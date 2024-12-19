@@ -3,6 +3,7 @@ import { PATH } from "@/constants/Pathjs";
 import { useMainContext } from "@/contexts/MainContext";
 import { useEffect } from "react";
 import { Link, NavLink } from "react-router-dom";
+import DropdownCart from "./DropdownCart";
 
 const HeaderMiddle = () => {
     const { handleOpenMobileMenu } = useMainContext();
@@ -109,79 +110,7 @@ const HeaderMiddle = () => {
                             </div>
                         </form>
                     </div>
-                    <div className="dropdown cart-dropdown">
-                        <a
-                            href="#"
-                            className="dropdown-toggle"
-                            role="button"
-                            data-toggle="dropdown"
-                            aria-haspopup="true"
-                            aria-expanded="false"
-                            data-display="static"
-                        >
-                            <i className="icon-shopping-cart" />
-                            <span className="cart-count">2</span>
-                        </a>
-                        <div className="dropdown-menu dropdown-menu-right">
-                            <div className="dropdown-cart-products">
-                                <div className="product">
-                                    <div className="product-cart-details">
-                                        <h4 className="product-title">
-                                            <a href="product-detail.html">Beige knitted</a>
-                                        </h4>
-                                        <span className="cart-product-info">
-                                            <span className="cart-product-qty">1</span> x $84.00
-                                        </span>
-                                    </div>
-                                    <figure className="product-image-container">
-                                        <a href="product-detail.html" className="product-image">
-                                            <img
-                                                src="assets/images/products/cart/product-1.jpg"
-                                                alt="product"
-                                            />
-                                        </a>
-                                    </figure>
-                                    <a href="#" className="btn-remove" title="Remove Product">
-                                        <i className="icon-close" />
-                                    </a>
-                                </div>
-                                <div className="product">
-                                    <div className="product-cart-details">
-                                        <h4 className="product-title">
-                                            <a href="product-detail.html">Blue utility</a>
-                                        </h4>
-                                        <span className="cart-product-info">
-                                            <span className="cart-product-qty">1</span> x $76.00
-                                        </span>
-                                    </div>
-                                    <figure className="product-image-container">
-                                        <a href="product-detail.html" className="product-image">
-                                            <img
-                                                src="assets/images/products/cart/product-2.jpg"
-                                                alt="product"
-                                            />
-                                        </a>
-                                    </figure>
-                                    <a href="#" className="btn-remove" title="Remove Product">
-                                        <i className="icon-close" />
-                                    </a>
-                                </div>
-                            </div>
-                            <div className="dropdown-cart-total">
-                                <span>Total</span>
-                                <span className="cart-total-price">$160.00</span>
-                            </div>
-                            <div className="dropdown-cart-action">
-                                <a href="cart.html" className="btn btn-primary">
-                                    View Cart
-                                </a>
-                                <a href="checkout.html" className="btn btn-outline-primary-2">
-                                    <span>Checkout</span>
-                                    <i className="icon-long-arrow-right" />
-                                </a>
-                            </div>
-                        </div>
-                    </div>
+                    <DropdownCart />
                 </div>
             </div>
         </div>

@@ -1,5 +1,4 @@
 import axiosInstance from "@/utils/axiosInstance";
-
 const CartServices = {
     getCart: (query = "") => {
         return axiosInstance.get(`/carts/me${query}`);
