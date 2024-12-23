@@ -3,7 +3,6 @@ import BlogServices from "@/services/BlogServices";
 import React, { useEffect, useMemo } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import ReplyBlog from "./components/ReplyBlog";
-import CommentsBlog from "./components/commentsBlog";
 import RelatedPostBlog from "./components/RelatedPostBlog";
 import NavDetailBlog from "./components/NavDetailBlog";
 import MainContentBlog from "./components/MainContentBlog";
@@ -12,6 +11,7 @@ import { PATH } from "@/constants/Pathjs";
 import { Breadcrumb } from "antd";
 import { formatDate } from "@/utils/format";
 import { FORMAT_DATE } from "@/constants/Format";
+import CommentsBlog from "./components/CommentsBlog";
 
 let BLOG_RELATED = 6;
 
