@@ -11,7 +11,7 @@ const Footer = () => {
                         <div className="col-sm-6 col-lg-5">
                             <div className="widget widget-about">
                                 <img
-                                    src="assets/images/logo.svg"
+                                    src="/assets/images/logo.svg"
                                     className="footer-logo"
                                     alt="Footer Logo"
                                     width={120}

@@ -6,7 +6,7 @@ const OrderServices = {
     getMyOrder: () => {
         return axiosInstance.get("/orders/me");
     },
-    getMyOrder: (id = "") => {
+    getMyOrderById: (id = "") => {
         return axiosInstance.get(`/orders/${id}/me`);
     },
     checkoutOrder: (payload = {}) => {

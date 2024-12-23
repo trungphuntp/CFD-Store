@@ -1,9 +1,11 @@
 import { PATH } from "@/constants/Pathjs";
+import AuthServices from "@/services/AuthServices";
+import { handleGetProfile } from "@/store/reducers/authReducer";
 import { handleAddCart } from "@/store/reducers/cartReducer";
 import { compareDate, formatCurrency } from "@/utils/format";
 import { message } from "antd";
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 const ProductCard = ({
@@ -21,6 +23,7 @@ const ProductCard = ({
     const linkDetail = PATH.PRODUCTS.INDEX + `/${slug}`;
     const isNewProduct = compareDate(updatedAt);
     const dispatch = useDispatch();
+    const { profile } = useSelector((state) => state.auth);
 
     const handleAddToCard = async (e) => {
         e?.preventDefault();
@@ -32,8 +35,30 @@ const ProductCard = ({
             addedPrice: price - discount,
         };
         const res = await dispatch(handleAddCart(addPayload)).unwrap();
-        if (res?.id) {
-            // console.log(res);
+    };
+
+    const handleAddToWishlist = async (e, idProduct) => {
+        e?.stopPropagation();
+        e?.preventDefault();
+        const myWishlist = profile?.whiteList;
+        const addedWishlist = myWishlist?.find((wishlish) => wishlish.id === idProduct);
+        if (addedWishlist) {
+            message.error("This product has been added to the wishlist previously");
+            return;
+        }
+        try {
+            const payload = {
+                product: idProduct,
+            };
+            const res = await AuthServices.addWishlist(payload);
+            if (res?.data?.data) {
+                dispatch(handleGetProfile());
+                message.success("Add to Wishlist successfully!");
+            } else {
+                message.error("Add to Wishlist failed!");
+            }
+        } catch (error) {
+            message.error("Add to Wishlist failed!");
         }
     };
 
@@ -56,7 +81,13 @@ const ProductCard = ({
                     />
                 </Link>
                 <div className="product-action-vertical">
-                    <a href="#" className="btn-product-icon btn-wishlist btn-expandable">
+                    <a
+                        href="#"
+                        className="btn-product-icon btn-wishlist btn-expandable"
+                        onClick={(e) => {
+                            handleAddToWishlist(e, id);
+                        }}
+                    >
                         <span>add to wishlist</span>
                     </a>
                 </div>

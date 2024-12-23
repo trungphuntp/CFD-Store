@@ -21,7 +21,25 @@ const AuthServices = {
         return axiosInstance.post("/customer/white-list", payload);
     },
     removeWishlist: (payload = {}) => {
-        return axiosInstance.delete("/customer/white-list", payload);
+        return axiosInstance.delete("/customer/white-list", { data: payload });
+    },
+    getProvince: () => {
+        return axiosInstance.get("/provinces");
+    },
+    getProvinceById: (id = "") => {
+        return axiosInstance.get(`/provinces/${id}`);
+    },
+    getDistrict: (ProvinceID = "") => {
+        return axiosInstance.get(`/districts?province=${ProvinceID}`);
+    },
+    getDistrictById: (id = "") => {
+        return axiosInstance.get(`/districts/${id}`);
+    },
+    getWard: (DistrictId = "") => {
+        return axiosInstance.get(`/wards?district=${DistrictId}`);
+    },
+    getWardById: (id = "") => {
+        return axiosInstance.get(`/wards/${id}`);
     },
 };
 

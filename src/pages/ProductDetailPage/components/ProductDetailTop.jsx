@@ -22,6 +22,7 @@ const ProductDetailTop = ({
     widthStar,
     description,
     reviews,
+    handleWishlish,
 }) => {
     const categoryPath = PATH.PRODUCTS.INDEX + `?category=${category?.id}`;
     const refColor = useRef();
@@ -50,16 +51,18 @@ const ProductDetailTop = ({
                     resetColor();
                     resetQuantity();
                 }
-            } catch (error) {
-                console.log(error);
-            }
+            } catch (error) {}
         }
     };
 
-    const handleAddToWishlist = (e) => {
+    const handleAddToWishlist = (e, idProduct) => {
         e?.preventDefault();
-        handleWishlish?.();
+        e?.stopPropagation();
+        if (idProduct) {
+            handleWishlish?.(idProduct);
+        }
     };
+
     return (
         <div className="product-details-top">
             <div className="row">
@@ -113,7 +116,9 @@ const ProductDetailTop = ({
                                     href="#"
                                     className="btn-product btn-wishlist"
                                     title="Wishlist"
-                                    onClick={handleAddToWishlist}
+                                    onClick={(e) => {
+                                        handleAddToWishlist(e, id);
+                                    }}
                                 >
                                     <span>Add to Wishlist</span>
                                 </a>

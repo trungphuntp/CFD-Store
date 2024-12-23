@@ -14,8 +14,8 @@ const Loading = styled.div`
     z-index: 999;
 `;
 
-const ComponentLoading = () => {
-    return <Loading className="loading-component"></Loading>;
+const ComponentLoading = ({ children }) => {
+    return <Loading className="loading-component">{children}</Loading>;
 };
 
 export default ComponentLoading;

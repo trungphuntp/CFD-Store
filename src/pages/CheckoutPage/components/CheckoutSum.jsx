@@ -1,6 +1,19 @@
-import React from "react";
+import Button from "@/components/Button";
+import { TYPE_METHOD_PAYMENT } from "@/constants/General";
+import { PATH } from "@/constants/Pathjs";
+import { formatCurrency } from "@/utils/format";
+import { Link } from "react-router-dom";
 
-const CheckoutSum = () => {
+const CheckoutSum = ({ cartInfor, selectMethodPayment, handleMethodPayment }) => {
+    const { product, quantity, total, subTotal, totalProduct, shipping, discount, discountCode } =
+        cartInfor || [];
+
+    const handleChangeMethod = (e, typeMethod) => {
+        e?.preventDefault();
+        e?.stopPropagation();
+        handleMethodPayment?.(typeMethod);
+    };
+
     return (
         <aside className="col-lg-3">
             <div className="summary">
@@ -13,42 +26,71 @@ const CheckoutSum = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>
-                                <a href="#">Beige knitted elastic runner shoes</a>
-                            </td>
-                            <td>$84.00</td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <a href="#">Blue utility pinafore denimdress</a>
-                            </td>
-                            <td>$76,00</td>
-                        </tr>
+                        {product?.map((product, index) => {
+                            const { slug, name } = product;
+                            const linkDetail = PATH.PRODUCTS.INDEX + `/${slug || ""}`;
+
+                            return (
+                                <tr key={product?.id + index}>
+                                    <td>
+                                        <Link to={linkDetail}>{name || ""}</Link>
+                                    </td>
+                                    <td>{`${quantity[index]} x ${formatCurrency(
+                                        totalProduct[index]
+                                    )}`}</td>
+                                </tr>
+                            );
+                        })}
+
+                        {/* SUB TOTAL */}
                         <tr className="summary-subtotal">
                             <td>Subtotal:</td>
-                            <td>$160.00</td>
+                            <td>${formatCurrency(subTotal || 0)}</td>
                         </tr>
-                        <tr>
-                            <td>Shipping:</td>
-                            <td>Free shipping</td>
-                        </tr>
+                        {!!shipping ? (
+                            <tr>
+                                <td>Shipping:</td>
+                                <td>{`${shipping?.typeShip || ""} ($${formatCurrency(
+                                    shipping?.price || 0
+                                )})`}</td>
+                            </tr>
+                        ) : (
+                            <tr>
+                                <td>Shipping:</td>
+                                <td>
+                                    <Link to={PATH.CART}>Select shipping</Link>
+                                </td>
+                            </tr>
+                        )}
+                        {!!discount && !!discountCode && (
+                            <tr>
+                                <td>Discount:</td>
+                                <td>{`${discountCode || ""} - $${formatCurrency(
+                                    discount || 0
+                                )}`}</td>
+                            </tr>
+                        )}
+
                         <tr className="summary-total">
                             <td>Total:</td>
-                            <td>$160.00</td>
+                            <td>${formatCurrency(total || 0)}</td>
                         </tr>
                     </tbody>
                 </table>
                 <div className="accordion-summary" id="accordion-payment">
                     <div className="card">
-                        <div className="card-header" id="heading-1">
+                        <div className="card-header" id="heading-1" style={{ cursor: "pointer" }}>
                             <h2 className="card-title">
                                 <a
-                                    role="button"
-                                    data-toggle="collapse"
+                                    onClick={(e) => {
+                                        handleChangeMethod(e, TYPE_METHOD_PAYMENT.cash);
+                                    }}
+                                    className={`${
+                                        selectMethodPayment !== TYPE_METHOD_PAYMENT.cash
+                                            ? "collapsed"
+                                            : ""
+                                    }`}
                                     href="#collapse-1"
-                                    aria-expanded="true"
-                                    aria-controls="collapse-1"
                                 >
                                     {" "}
                                     Direct bank transfer{" "}
@@ -57,9 +99,9 @@ const CheckoutSum = () => {
                         </div>
                         <div
                             id="collapse-1"
-                            className="collapse show"
-                            aria-labelledby="heading-1"
-                            data-parent="#accordion-payment"
+                            className={`collapse ${
+                                selectMethodPayment === TYPE_METHOD_PAYMENT.cash ? "show" : ""
+                            }`}
                         >
                             <div className="card-body">
                                 {" "}
@@ -73,12 +115,15 @@ const CheckoutSum = () => {
                         <div className="card-header" id="heading-3">
                             <h2 className="card-title">
                                 <a
-                                    className="collapsed"
-                                    role="button"
-                                    data-toggle="collapse"
+                                    onClick={(e) => {
+                                        handleChangeMethod(e, TYPE_METHOD_PAYMENT.card);
+                                    }}
+                                    className={`${
+                                        selectMethodPayment !== TYPE_METHOD_PAYMENT.card
+                                            ? "collapsed"
+                                            : ""
+                                    }`}
                                     href="#collapse-3"
-                                    aria-expanded="false"
-                                    aria-controls="collapse-3"
                                 >
                                     {" "}
                                     Cash on delivery{" "}
@@ -87,9 +132,9 @@ const CheckoutSum = () => {
                         </div>
                         <div
                             id="collapse-3"
-                            className="collapse"
-                            aria-labelledby="heading-3"
-                            data-parent="#accordion-payment"
+                            className={`collapse ${
+                                selectMethodPayment === TYPE_METHOD_PAYMENT.card ? "show" : ""
+                            }`}
                         >
                             <div className="card-body">
                                 Quisque volutpat mattis eros. Lorem ipsum dolor sit amet,
@@ -99,10 +144,10 @@ const CheckoutSum = () => {
                         </div>
                     </div>
                 </div>
-                <button type="submit" className="btn btn-outline-primary-2 btn-order btn-block">
+                <Button type="submit" className="btn-order btn-block" variant="outline">
                     <span className="btn-text">Place Order</span>
                     <span className="btn-hover-text">Proceed to Checkout</span>
-                </button>
+                </Button>
             </div>
         </aside>
     );

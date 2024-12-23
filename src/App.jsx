@@ -11,9 +11,6 @@ import CheckoutSuccess from "./pages/CheckoutSuccessPage";
 import ProductPage from "./pages/ProductPage";
 import ProductDetailPage from "./pages/ProductDetailPage";
 import DashboardPage from "./pages/DashboardPage";
-import MyAccount from "./pages/DashboardPage/components/MyAccount";
-import MyAddress from "./pages/DashboardPage/components/MyAddress";
-import MyWishlist from "./pages/DashboardPage/components/MyWishlist";
 import ContactPage from "./pages/ContactPage";
 import FaqPage from "./pages/FaqPage";
 import PaymentMethodPage from "./pages/PaymentMethodPage";
@@ -28,6 +25,10 @@ import { message } from "antd";
 import { handleGetProfile } from "./store/reducers/authReducer";
 import { handleGetCart } from "./store/reducers/cartReducer";
 import { methodToken } from "./utils/Token";
+import MyOders from "./pages/DashboardPage/components/MyOders";
+import MyAddress from "./pages/DashboardPage/components/MyAddress";
+import MyAccount from "./pages/DashboardPage/components/MyAccount";
+import MyWishlist from "./pages/DashboardPage/components/MyWishlist";
 
 function App() {
     const dispatch = useDispatch();
@@ -65,7 +66,8 @@ function App() {
                     <Route element={<PrivateRoute />}>
                         {/* dashboard page */}
                         <Route path={PATH.DASHBOARD.INDEX} element={<DashboardPage />}>
-                            <Route path={PATH.DASHBOARD.ODER} element={<MyAccount />} />
+                            <Route index element={<MyAccount />} />
+                            <Route path={PATH.DASHBOARD.ODER} element={<MyOders />} />
                             <Route path={PATH.DASHBOARD.ADDRESS} element={<MyAddress />} />
                             <Route path={PATH.DASHBOARD.WISHLIST} element={<MyWishlist />} />
                         </Route>

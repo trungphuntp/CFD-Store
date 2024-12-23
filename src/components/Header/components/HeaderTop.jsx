@@ -1,9 +1,10 @@
 import { TYPE_MODAL } from "@/constants/General";
+import { PATH } from "@/constants/Pathjs";
 import useDebounce from "@/hooks/useDebounce";
 import { handleLogout, handleShowModal } from "@/store/reducers/authReducer";
 import { methodToken } from "@/utils/Token";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const HeaderTop = () => {
     const navigate = useNavigate();
@@ -21,7 +22,7 @@ const HeaderTop = () => {
         dispatch(handleLogout());
         navigate("/");
     };
-    const { firstName } = profile || [];
+    const { firstName, whiteList, email } = profile || [];
 
     return (
         <div className="header-top">
@@ -58,21 +59,28 @@ const HeaderTop = () => {
                                     }}
                                 >
                                     <i className="icon-user" />
-                                    {firstName || "Guest"}
+                                    {firstName || email || "Guest"}
                                 </a>
                                 <ul>
                                     <li>
                                         <ul>
                                             <li>
-                                                <a href="dashboard.html">Account Details</a>
+                                                <Link to={PATH.DASHBOARD.INDEX}>
+                                                    Account Details
+                                                </Link>
                                             </li>
                                             <li>
-                                                <a href="dashboard.html">Your Orders</a>
+                                                <Link to={PATH.DASHBOARD.ODER}>Your Orders</Link>
                                             </li>
                                             <li>
-                                                <a href="dashboard.html">
-                                                    Wishlist <span>(3)</span>
-                                                </a>
+                                                <Link to={PATH.DASHBOARD.WISHLIST}>
+                                                    Wishlist{" "}
+                                                    <span>
+                                                        {whiteList?.length > 0
+                                                            ? `(${whiteList?.length})`
+                                                            : `(0)`}
+                                                    </span>
+                                                </Link>
                                             </li>
                                             <li>
                                                 <a onClick={_onLogout} href="#">

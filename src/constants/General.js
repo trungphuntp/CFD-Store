@@ -47,3 +47,8 @@ export const SHOPPING_TYPE = [
         price: 20,
     },
 ];
+
+export const TYPE_METHOD_PAYMENT = {
+    cash: "cash",
+    card: "card",
+};
