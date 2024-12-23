@@ -105,7 +105,10 @@ const ProductDetailTop = ({
                         </div>
                         <div className="details-filter-row details-row-size">
                             <label htmlFor="qty">Qty:</label>
-                            <QuanlityProduct ref={refQuanlity} max={stock || 100} />
+                            <QuanlityProduct
+                                ref={refQuanlity}
+                                max={stock > 0 ? stock || 100 : stock * -1 || 100}
+                            />
                         </div>
                         <div className="product-details-action">
                             <a href="#" className="btn-product btn-cart" onClick={handleAddToCart}>

@@ -74,6 +74,7 @@ const ProductDetailPage = () => {
             message.error("Add to Wishlist failed!");
         }
     };
+    console.log(stock);
 
     // product top props
     const productTopProps = {

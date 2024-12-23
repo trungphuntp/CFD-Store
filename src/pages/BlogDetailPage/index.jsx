@@ -12,6 +12,8 @@ import { Breadcrumb } from "antd";
 import { formatDate } from "@/utils/format";
 import { FORMAT_DATE } from "@/constants/Format";
 import CommentsBlog from "./components/CommentsBlog";
+import useDebounce from "@/hooks/useDebounce";
+import ComponentLoading from "@/components/ComponentLoading";
 
 let BLOG_RELATED = 6;
 
@@ -222,8 +224,14 @@ const BlogDetailPage = () => {
         }
     }, [BlogRandom]);
 
+    // =================== Loading ===================
+    const loadingAPI =
+        loadingBlogDetail || loadingBlogAll || loadingBlogsTag || loadingCategoryBlog;
+    const loadingPage = useDebounce(loadingAPI, 300);
+
     return (
         <main className="main">
+            {!!loadingPage && <ComponentLoading />}
             <nav aria-label="breadcrumb" className="breadcrumb-nav border-0 mb-0">
                 <div className="container">
                     <Breadcrumb>
