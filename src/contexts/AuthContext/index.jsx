@@ -42,7 +42,6 @@ export const AuthContextProvider = ({ children }) => {
                 password: password || "",
             };
             const res = await AuthServices.register(payload);
-            console.log(res);
 
             if (res?.data?.data?.id) {
                 messageApi.success("Register success!");

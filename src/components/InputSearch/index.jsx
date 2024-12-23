@@ -23,7 +23,6 @@ const InputSearch = () => {
                 email,
             };
             const res = await SubscribeServices.deal(payload);
-            console.log(res?.data);
 
             if (res?.data) {
                 reset();

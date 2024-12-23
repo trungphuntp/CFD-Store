@@ -13,7 +13,6 @@ const ColorProduct = ({ colors, defaultValue = "", isClick = false }, ref) => {
     const onClickColor = (e, color) => {
         e?.preventDefault();
         e?.stopPropagation();
-        console.log(isClick);
         if (isClick) {
             if (selectedColor === color) {
                 setSelectedColor("");

@@ -23,8 +23,6 @@ const MyAddress = () => {
     );
     const { data: dataWard } = useQuery((query) => AuthServices.getWardById(ward), [profile]);
 
-    console.log(dataWard);
-
     return (
         <NavLink
             className={({ isActive }) => classNames("tab-pane fade", { "active show": isActive })}

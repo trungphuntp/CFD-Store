@@ -120,8 +120,6 @@ const MyAccount = () => {
         }
     };
 
-    console.log(provinceId);
-
     return (
         <div
             className={({ isActive }) => classNames("tab-pane fade", { "active show": isActive })}

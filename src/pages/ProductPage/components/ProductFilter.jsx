@@ -83,8 +83,6 @@ const ProductFilter = ({
                                                 id={id || index}
                                                 isChecked={activeFilter?.includes(id)}
                                                 onChange={(e) => {
-                                                    console.log(e.target.checked);
-
                                                     handleChangeFilter(id, e.target.checked);
                                                 }}
                                             />

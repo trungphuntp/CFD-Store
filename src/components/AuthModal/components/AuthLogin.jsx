@@ -45,6 +45,7 @@ const AuthLogin = () => {
                 />
                 <Input
                     label={"Password"}
+                    type="password"
                     {...register("password", {
                         required: MESSAGE.required,
                     })}

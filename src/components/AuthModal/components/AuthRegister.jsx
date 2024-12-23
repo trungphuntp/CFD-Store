@@ -44,6 +44,7 @@ const AuthRegister = () => {
                 />
                 <Input
                     label={"Password"}
+                    type={"password"}
                     {...register("password", {
                         required: MESSAGE.required,
                         minLength: {
