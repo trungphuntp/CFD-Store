@@ -1,18 +1,19 @@
+import { PATH } from "@/constants/Pathjs";
+import { Breadcrumb } from "antd";
 import React from "react";
+import { Link } from "react-router-dom";
 
 const AboutPage = () => {
     return (
         <main className="main">
             <nav aria-label="breadcrumb" className="breadcrumb-nav border-0 mb-0">
                 <div className="container">
-                    <ol className="breadcrumb">
-                        <li className="breadcrumb-item">
-                            <a href="index.html">Home</a>
-                        </li>
-                        <li className="breadcrumb-item active" aria-current="page">
-                            About us
-                        </li>
-                    </ol>
+                    <Breadcrumb>
+                        <Breadcrumb.Item>
+                            <Link to={PATH.INDEX}>Home</Link>
+                        </Breadcrumb.Item>
+                        <Breadcrumb.Item isActive={true}>About us</Breadcrumb.Item>
+                    </Breadcrumb>
                 </div>
             </nav>
             <div className="container">

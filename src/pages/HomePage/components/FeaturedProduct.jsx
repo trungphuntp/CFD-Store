@@ -38,10 +38,7 @@ const FeaturedProduct = ({
                         {!!categories &&
                             categories?.map((cate, index) => {
                                 return (
-                                    <li
-                                        className="nav-item"
-                                        key={cate?.id || new Date().getTime() + index}
-                                    >
+                                    <li className="nav-item" key={cate?.id || index}>
                                         <a
                                             className={`nav-link ${
                                                 featuredProductActive === cate?.name ? "active" : ""
@@ -104,7 +101,7 @@ const FeaturedProduct = ({
                                 ?.map((product, index) => {
                                     return (
                                         <ProductCard
-                                            key={product?.id || new Date().getTime() + index}
+                                            key={product?.id || new Date().getTime() + index + 2}
                                             {...product}
                                         />
                                     );
@@ -116,7 +113,7 @@ const FeaturedProduct = ({
                 {categories?.map((cate, index) => {
                     return (
                         <div
-                            key={cate?.id || new Date().getTime() + index}
+                            key={cate?.id || new Date().getTime() + index * 3}
                             className={`tab-pane p-0 fade ${
                                 featuredProductActive === cate?.name ? "active show" : ""
                             }`}
@@ -159,7 +156,8 @@ const FeaturedProduct = ({
                                                 <ProductCard
                                                     {...product}
                                                     key={
-                                                        product?.id || new Date().getTime() + index
+                                                        product?.id ||
+                                                        new Date().getTime() + index + 10
                                                     }
                                                 />
                                             </>

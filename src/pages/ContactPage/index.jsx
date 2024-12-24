@@ -1,10 +1,13 @@
 import { Input } from "@/components/Input";
 import Textarea from "@/components/Textarea";
+import { PATH } from "@/constants/Pathjs";
 import { MESSAGE, REGEX } from "@/constants/Validate";
 import { useMainContext } from "@/contexts/MainContext";
 import useDebounce from "@/hooks/useDebounce";
+import { Breadcrumb } from "antd";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { Link } from "react-router-dom";
 
 const ContactPage = () => {
     const [loading, setLoading] = useState(false);
@@ -32,14 +35,12 @@ const ContactPage = () => {
         <main className="main">
             <nav aria-label="breadcrumb" className="breadcrumb-nav border-0 mb-0">
                 <div className="container">
-                    <ol className="breadcrumb">
-                        <li className="breadcrumb-item">
-                            <a href="index.html">Home</a>
-                        </li>
-                        <li className="breadcrumb-item active" aria-current="page">
-                            Contact us
-                        </li>
-                    </ol>
+                    <Breadcrumb>
+                        <Breadcrumb.Item>
+                            <Link to={PATH.INDEX}>Home</Link>
+                        </Breadcrumb.Item>
+                        <Breadcrumb.Item isActive={true}>Contact us</Breadcrumb.Item>
+                    </Breadcrumb>
                 </div>
             </nav>
             <div className="container">
