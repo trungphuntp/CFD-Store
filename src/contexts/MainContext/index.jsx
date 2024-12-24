@@ -7,7 +7,7 @@ const MainContext = createContext({});
 
 export const MainContextProvider = ({ children }) => {
     // scollTop
-    const { pathname } = useLocation();
+    const { pathname, search } = useLocation();
     const navigate = useNavigate();
     const [messageApi, contextHolder] = message.useMessage();
     useEffect(() => {
@@ -19,7 +19,7 @@ export const MainContextProvider = ({ children }) => {
         return () => {
             clearTimeout(myTimeOut);
         };
-    }, [pathname]);
+    }, [pathname, search]);
 
     // close menu mobile
     const handleCloseMobileMenu = (e) => {

@@ -5,6 +5,8 @@ import { Link, NavLink } from "react-router-dom";
 import { MenuStyled } from "../StyledComponents";
 import classNames from "classnames";
 import styled from "styled-components";
+import useQuery from "@/hooks/useQuery";
+import ProductServices from "@/services/ProductServices";
 
 const MENU = {
     menu: "menu",
@@ -13,7 +15,6 @@ const MENU = {
 
 const MobileMenu = () => {
     const { handleCloseMobileMenu } = useMainContext();
-
     const [selectMenuMobile, setSelectMenuMobile] = useState(MENU.menu);
 
     const handleSelectMenuMenu = (e) => {
@@ -26,6 +27,9 @@ const MobileMenu = () => {
         e?.preventDefault();
         setSelectMenuMobile(MENU.category);
     };
+
+    const { data: categoryProduct } = useQuery(ProductServices.getProductCategories);
+    const categories = categoryProduct?.products || [];
 
     return (
         <div className="mobile-menu-container">
@@ -124,23 +128,20 @@ const MobileMenu = () => {
                     >
                         <nav className="mobile-cats-nav">
                             <ul className="mobile-cats-menu">
-                                <li>
-                                    <a className="mobile-cats-lead" href="#">
-                                        TV
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">Computers</a>
-                                </li>
-                                <li>
-                                    <a href="#">Tablets &amp; Cell Phones</a>
-                                </li>
-                                <li>
-                                    <a href="#">Smartwatches</a>
-                                </li>
-                                <li>
-                                    <a href="#">Accessories</a>
-                                </li>
+                                {categories?.map((cate, index) => {
+                                    const { id, name, slug } = cate;
+                                    return (
+                                        <li key={id || index}>
+                                            <Link
+                                                to={PATH.PRODUCTS.INDEX + `?category=${id}`}
+                                                className="mobile-cats-lead"
+                                                href="#"
+                                            >
+                                                {name}
+                                            </Link>
+                                        </li>
+                                    );
+                                })}
                             </ul>
                             {/* End .mobile-cats-menu */}
                         </nav>
