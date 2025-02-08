@@ -5,6 +5,7 @@ import { MESSAGE, REGEX } from "@/constants/Validate";
 import useAddress from "@/hooks/useAddress";
 import AuthServices from "@/services/AuthServices";
 import { formatDate } from "@/utils/format";
+import RemoveAccent from "@/utils/removeAccent";
 import { message, Select } from "antd";
 import classNames from "classnames";
 import { useEffect } from "react";
