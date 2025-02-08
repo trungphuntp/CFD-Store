@@ -40,8 +40,11 @@ const ProductFilter = ({
                 handlePriceChange(values);
             });
 
-            document.getElementById("clearAllFilter").addEventListener("click", function () {
-                priceSlider.noUiSlider.set([currentPrice, 5000]);
+            document.getElementById("clearAllFilter").addEventListener("click", function (e) {
+                priceSlider.noUiSlider.set([0, 5000]);
+                e?.preventDefault();
+                handleChangeFilter("");
+                handlePriceChange("reset");
             });
         }
     }, []);
@@ -51,15 +54,7 @@ const ProductFilter = ({
             <div className="sidebar sidebar-shop">
                 <div className="widget widget-clean">
                     <label>Filters:</label>
-                    <a
-                        id="clearAllFilter"
-                        href="#"
-                        className="sidebar-filter-clear"
-                        onClick={(e) => {
-                            e?.preventDefault();
-                            handleChangeFilter("");
-                        }}
-                    >
+                    <a id="clearAllFilter" href="#" className="sidebar-filter-clear">
                         Clean All
                     </a>
                 </div>

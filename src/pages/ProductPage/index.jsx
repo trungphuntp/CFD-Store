@@ -163,12 +163,21 @@ const ProductPage = () => {
     // custom 1 useDebounce thành function để sử dụng
     // dùng ref để lưu thời gian timmer tránh việc call API liên tục
     const priceFilterTimer = useRef();
+
     const handlePriceChange = (priceChange) => {
         if (priceChange?.length === 2) {
             updateQuerystring({
                 ...querryObjectPage,
-                minPrice: priceChange[0]?.substring(1) || 0,
-                maxPrice: priceChange[2]?.substring(1) || 5000,
+                minPrice: priceChange[0]?.substring(1) || "0",
+                maxPrice: priceChange[1]?.substring(1) || "5000",
+                page: 1,
+            });
+        }
+        if (priceChange === "reset") {
+            updateQuerystring({
+                ...querryObjectPage,
+                minPrice: "0",
+                maxPrice: "5000",
                 page: 1,
             });
         }
