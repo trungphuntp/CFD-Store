@@ -67,7 +67,7 @@ const Subscridehome = () => {
                                 <p className="cta-desc">
                                     and <br />
                                     receive
-                                    <span className="text-primary">$20 coupon</span> for first
+                                    <span className="text-primary">{` $20 coupon`}</span> for first
                                     shopping
                                 </p>
                                 <InputSearch />

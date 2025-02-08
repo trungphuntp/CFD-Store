@@ -1,4 +1,5 @@
 import Button from "@/components/Button";
+import { PATH } from "@/constants/Pathjs";
 import React from "react";
 
 const CheckoutSuccess = () => {
@@ -11,7 +12,11 @@ const CheckoutSuccess = () => {
                         Your order has been completed. Your order details are shown for your
                         personal accont.{" "}
                     </p>
-                    <Button href="dashboard.html" className="btn-minwidth-lg" variant="outline">
+                    <Button
+                        link={PATH.DASHBOARD.ODER}
+                        className="btn-minwidth-lg"
+                        variant="outline"
+                    >
                         <span>VIEW MY ORDERS</span>
                         <i className="icon-long-arrow-right" />
                     </Button>
