@@ -39,6 +39,10 @@ const ProductFilter = ({
                 $("#filter-price-range").text(values.join(" - "));
                 handlePriceChange(values);
             });
+
+            document.getElementById("clearAllFilter").addEventListener("click", function () {
+                priceSlider.noUiSlider.set([currentPrice, 5000]);
+            });
         }
     }, []);
 
@@ -48,6 +52,7 @@ const ProductFilter = ({
                 <div className="widget widget-clean">
                     <label>Filters:</label>
                     <a
+                        id="clearAllFilter"
                         href="#"
                         className="sidebar-filter-clear"
                         onClick={(e) => {

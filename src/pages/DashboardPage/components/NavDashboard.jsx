@@ -1,5 +1,7 @@
 import { PATH } from "@/constants/Pathjs";
-import { NavLink } from "react-router-dom";
+import { handleLogout } from "@/store/reducers/authReducer";
+import { useDispatch } from "react-redux";
+import { NavLink, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 const NavDashBoardStyled = styled.ul`
@@ -11,9 +13,14 @@ const NavDashBoardStyled = styled.ul`
 `;
 
 const NavDashboard = () => {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
     const handleLogOut = (e) => {
         e?.stopPropagation();
         e?.preventDefault();
+        console.log(1);
+
         dispatch(handleLogout());
         navigate("/");
     };
