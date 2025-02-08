@@ -1,5 +1,5 @@
 import CheckBox from "@/components/Checkbox";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 const ProductFilter = ({
     categories,
@@ -8,7 +8,10 @@ const ProductFilter = ({
     handleChangeFilter,
     handlePriceChange,
     currentPrice,
+    handleResetAll,
 }) => {
+    const [valuePrice, setvaluePrice] = useState([]);
+
     useEffect(() => {
         // Slider For category pages / filter price
         if (typeof noUiSlider === "object") {
@@ -35,19 +38,25 @@ const ProductFilter = ({
             });
 
             // Update Price Range
-            priceSlider.noUiSlider.on("update", function (values, handle) {
+            priceSlider.noUiSlider.on("change", function (values, handle) {
                 $("#filter-price-range").text(values.join(" - "));
-                handlePriceChange(values);
+                setvaluePrice(values);
             });
 
-            document.getElementById("clearAllFilter").addEventListener("click", function (e) {
+            document.getElementById("clearAllFilter").addEventListener("click", function () {
                 priceSlider.noUiSlider.set([0, 5000]);
-                e?.preventDefault();
-                handleChangeFilter("");
-                handlePriceChange("reset");
             });
         }
+
+        document.getElementById("clearAllFilter").addEventListener("click", function (e) {
+            e?.preventDefault();
+            handleResetAll?.();
+        });
     }, []);
+
+    useEffect(() => {
+        handlePriceChange?.(valuePrice);
+    }, [valuePrice]);
 
     return (
         <aside className="col-lg-3 order-lg-first">

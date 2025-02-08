@@ -19,7 +19,9 @@ const LIMIT_PRODUCT = 9;
 
 const ProductPage = () => {
     const { search } = useLocation();
-    const querryObjectPage = queryString.parse(search);
+    let querryObjectPage = queryString.parse(search);
+
+    console.log(querryObjectPage);
 
     // useSearchParams trả về param hiện tại và hàm set search trên param
     const [currentParams, setSearchParams] = useSearchParams();
@@ -165,22 +167,23 @@ const ProductPage = () => {
     const priceFilterTimer = useRef();
 
     const handlePriceChange = (priceChange) => {
-        if (priceChange?.length === 2) {
-            updateQuerystring({
-                ...querryObjectPage,
-                minPrice: priceChange[0]?.substring(1) || "0",
-                maxPrice: priceChange[1]?.substring(1) || "5000",
-                page: 1,
-            });
-        }
-        if (priceChange === "reset") {
-            updateQuerystring({
-                ...querryObjectPage,
-                minPrice: "0",
-                maxPrice: "5000",
-                page: 1,
-            });
-        }
+        console.log(querryObjectPage);
+        updateQuerystring({
+            ...querryObjectPage,
+            minPrice: priceChange[0]?.substring(1) || "0",
+            maxPrice: priceChange[1]?.substring(1) || "5000",
+            page: 1,
+        });
+    };
+
+    // handleResetAll
+    const handleResetAll = () => {
+        updateQuerystring({
+            ...querryObjectPage,
+            minPrice: "0",
+            maxPrice: "5000",
+            page: 1,
+        });
     };
 
     // filter props
@@ -190,6 +193,7 @@ const ProductPage = () => {
         activeFilter,
         handleChangeFilter,
         handlePriceChange,
+        handleResetAll,
         currentPrice: [querryObjectPage.minPrice || 0, querryObjectPage.maxPrice || 5000],
     };
 
