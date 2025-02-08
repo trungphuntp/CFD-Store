@@ -4,16 +4,18 @@ import { FORMAT_DATE } from "@/constants/Format";
 import { MESSAGE, REGEX } from "@/constants/Validate";
 import useAddress from "@/hooks/useAddress";
 import AuthServices from "@/services/AuthServices";
+import { handleGetProfile } from "@/store/reducers/authReducer";
 import { formatDate } from "@/utils/format";
 import RemoveAccent from "@/utils/removeAccent";
 import { message, Select } from "antd";
 import classNames from "classnames";
 import { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const MyAccount = () => {
     const { profile } = useSelector((state) => state.auth);
+    const dispatch = useDispatch();
 
     const { firstName, email, phone, province, district, ward, street, birthday } = profile || [];
 
@@ -111,6 +113,7 @@ const MyAccount = () => {
             try {
                 const res = await AuthServices.updateProfiles(payload);
                 if (res?.data?.data) {
+                    dispatch(handleGetProfile?.());
                     message.success("Update profile successfully!");
                 } else {
                     message.success("Update profile failed!");
